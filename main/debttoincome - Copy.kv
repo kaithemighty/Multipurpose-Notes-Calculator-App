@@ -1,0 +1,428 @@
+#:kivy 2.0.0
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+WindowManager:
+    transition: FadeTransition()
+    FirstScreen:
+    SecondScreen:
+        id: second_screen
+    ThirdScreen:
+    INPUT:
+        id: input
+
+<MainButton>:
+    background_color: .3 , .92 , 1 , 1
+    background_normal: ''
+    canvas.before:
+        Color: 
+            rgba: .2 , .61 , .75 , 1
+        Line: 
+            rectangle: self.x , self.y , self.width , self.height
+            width: 2
+    
+<OutlineButton>:
+    canvas.before: 
+        Color: 
+            rgba: 0 , 0 , 0 , 1
+        Line: 
+            rectangle: self.x , self.y , self.width , self.height
+            width: 2
+
+<CreateAccount>:
+    newuser: newuser
+    newpass: newpass
+    Image: 
+        source: 'mushronaught.png'
+        size_hint_x: .9
+        pos_hint: {'x': .075 , 'center_y': .65}
+
+    MainButton: 
+        text: 'Create Your Account Here'
+        pos_hint: {'x': .3 , 'y': .7}
+        size_hint: .4 , .05
+
+    MainButton: 
+        text: 'Username'
+        pos_hint: {'x': .1 , 'y': .6}
+        size_hint: .15 , .04
+
+    TextInput: 
+        id: newuser
+        multiline: False
+        pos_hint: {'x': .26 , 'y': .6}
+        size_hint: .64 , .04
+
+    MainButton: 
+        text: 'Password'
+        pos_hint: {'x': .1 , 'y': .55}
+        size_hint: .15 , .04
+
+    TextInput: 
+        id: newpass
+        multiline: False
+        pos_hint: {'x': .26 , 'y': .55}
+        size_hint: .64 , .04
+        
+    MainButton: 
+        text: 'VALIDATE'
+        pos_hint: {'x': .35 , 'y': .48}
+        size_hint: .3 , .03
+        on_release: root.createacct(), root.dismiss_popup()
+
+
+<INPUT>:
+
+    name: 'INPUT'
+    canvas.before: 
+        Rectangle: 
+            pos: self.pos
+            size: self.size
+            source: 'bg2.png'
+
+    FloatLayout:
+        pos: 0 , 0
+        size: root.width , root.height
+
+        Image: 
+            source: 'mushronaught.png'
+            size_hint_x: .4
+            pos_hint: {'x': .05 , 'y': .36}
+        
+        MainButton:
+            id: Chosen_Field 
+            text: ''
+            pos_hint: {'x': .325 , 'y': .7}
+            size_hint: .35 , .04
+
+        OutlineButton: 
+            text: 'Add Value'
+            size_hint: .6 , .04
+            pos_hint: {'x': .2 , 'top': .15}
+            on_release: root.add_data_field()
+
+            
+
+        ScrollView:
+            pos_hint: {'x': .2 , 'top': .65}
+            size_hint: .6 , .5
+
+            canvas.before:
+                Color:
+                    rgba: 0 , 0 , 0 , 1  
+                Line:
+                    rectangle: (self.x , self.y , self.width , self.height)
+                    width: 2
+
+            BoxLayout: 
+                id: INPUT_scroll
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+ 
+        MainButton: 
+            text: '-GO BACK-'
+            size_hint: 1 , .06
+            pos_hint: {'x': 0 , 'y': 0}
+            on_release: root.manager.current = 'input'
+            on_release: root.clear_values()
+       
+
+<FirstScreen>:
+    name: 'mainpage'
+    user: user
+    password: password
+
+    canvas.before:
+
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'bg2.png'
+
+    FloatLayout:
+        pos: 0 , 0
+        size: root.width , root.height
+
+        Image: 
+            source: 'mushronaught.png'
+            size_hint_x: .4
+            pos_hint: {'x': .05 , 'y': .36}
+
+
+        MainButton: 
+            text: 'create acct'
+            pos_hint: {'x': .65 , 'y': .95}
+            size_hint: .3 , .03
+            on_release: root.show_popup()
+
+        MainButton: 
+            text: 'LOGIN'
+            pos_hint: {'x': .4 , 'y': .7}
+            size_hint: .2 , .04
+
+        MainButton: 
+            text: 'Username'
+            pos_hint: {'x': .35 , 'y': .55}
+            size_hint: .3 , .03
+
+        TextInput:
+            id: user
+            multiline: False
+            size_hint: .5 , .03
+            pos_hint: {'x': .25 , 'y': .5}
+
+        MainButton: 
+            text: 'Password'
+            pos_hint: {'x': .35 , 'y': .45}
+            size_hint: .3 , .03
+
+        TextInput: 
+            id: password
+            multiline: False
+            size_hint: .5 , .03
+            pos_hint: {'x': .25 , 'y': .4} 
+        
+        MainButton: 
+            text: 'VALIDATE'
+            pos_hint: {'x': .15 , 'y': .15}
+            size_hint: .7 , .04
+            on_release: root.validate(root.user.text , root.password.text)
+            on_press: root.load_sources('Income')
+            on_press: root.load_sources('Expenses')
+
+
+<SecondScreen>:
+    name: 'input'
+
+
+    canvas.before:
+
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'bg2.png'
+
+    FloatLayout:
+        size: root.size
+        pos: root.pos
+
+        Image: 
+            source: 'mushronaught.png'
+            size_hint_x: .4
+            pos_hint: {'x': .05 , 'y': .36}
+        
+        ScrollView:
+            size_hint: .4 , .45
+            pos_hint: {'x': .075 , 'top': .6}
+            canvas.before:
+                Color:
+                    rgba: 0 , 0 , 0 , 1  
+                Line:
+                    rectangle: (self.x , self.y , self.width , self.height)
+                    width: 2
+
+            BoxLayout:
+                id: Income_Box
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height 
+                background_color: 1 , 1 , 1 , 1
+
+                BoxLayout:
+                    id: paycheck_layout
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 100
+                    OutlineButton:
+                        text: 'PAYCHECK'
+                        size_hint: .9 , None
+                        height: 100
+                        on_release: root.manager.current = 'INPUT'
+                        on_release: root.change_INPUT_values('Paycheck Income')
+                        on_release: root.load_values('Paycheck Income')
+
+                    OutlineButton: 
+                        text: '-'
+                        size_hint: .1 , None
+                        height: 100
+                        on_release: root.remove_data_field_income(self)
+
+                BoxLayout:
+                    id: investments_layout
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 100
+                    OutlineButton:
+                        text: 'INVESTMENTS'
+                        size_hint: .9 , None
+                        height: 100
+                        on_release: root.manager.current = 'INPUT'
+                        on_release: root.change_INPUT_values('Investments Income')
+                        on_release: root.load_values('Investments Income')
+                    OutlineButton: 
+                        text: '-'
+                        size_hint: .1 , None
+                        height: 100
+                        on_release: root.remove_data_field_income(self)
+
+        OutlineButton: 
+            text: 'Add Input Field'
+            size_hint: .4 , .05
+            pos_hint: {'x': .075 , 'y': .1}
+            on_release: root.income_button()
+
+
+        Label: 
+            text: 'INCOME SOURCES'
+            pos_hint: {'x': .18 , 'y': .6}
+            size_hint: .2 , .05
+            color: (0 , 0 , 0 , 1)
+
+        MainButton: 
+            text: '?'
+            size_hint: None , None
+            size: 25 , 25
+            pos_hint: {'right': .465 , 'y': .61}
+            on_release: root.income_hint()
+
+        Label: 
+            text: 'DEBT SOURCES'
+            pos_hint: {'x': .62 , 'y': .6}
+            size_hint: .2 , .05
+            color: (0 , 0 , 0 , 1)
+
+        MainButton: 
+            text: '?'
+            size_hint: None , None
+            size: 25 , 25
+            pos_hint: {'right': .915 , 'y': .61}
+            on_release: root.debt_hint()
+
+
+        ScrollView:
+            size_hint: .4 , .45
+            pos_hint: {'x': .525 , 'top': .6}
+
+            canvas.before: 
+                Color: 
+                    rgba: 0 , 0 , 0 , 1
+                Line: 
+                    rectangle: (self.x , self.y , self.width , self.height)
+                    width: 2
+
+            BoxLayout: 
+                id: Debt_Box
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+
+                BoxLayout:
+                    id: rent_layout
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 100
+                    OutlineButton:
+                        text: 'RENT'
+                        size_hint: .9 , None
+                        height: 100
+                        on_release: root.manager.current = 'INPUT'
+                        on_release: root.change_INPUT_values('Rent Expenses')
+                        on_release: root.load_values('Rent Expenses')
+                    OutlineButton: 
+                        text: '-'
+                        size_hint: .1 , None
+                        height: 100
+                        on_release: root.remove_data_field_debt(self)
+
+                BoxLayout:
+                    id: gas_layout
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 100
+                    OutlineButton:
+                        text: 'GAS'
+                        size_hint: .9 , None
+                        height: 100
+                        on_release: root.manager.current = 'INPUT'
+                        on_release: root.change_INPUT_values('Gas Expenses')
+                        on_release: root.load_values('Gas Expenses')
+                    OutlineButton: 
+                        text: '-'
+                        background_color: (1,1,1,1)
+                        size_hint: .1 , None
+                        height: 100
+                        on_release: root.remove_data_field_debt(self)
+
+                BoxLayout:
+                    id: food_layout
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 100
+                    OutlineButton:
+                        text: 'FOOD'
+                        size_hint: .9 , None
+                        height: 100
+                        on_release: root.manager.current = 'INPUT'
+                        on_release: root.change_INPUT_values('Food Expenses')
+                        on_release: root.load_values('Food Expenses')
+                    OutlineButton: 
+                        text: '-'
+                        size_hint: .1 , None
+                        height: 100
+                        on_release: root.remove_data_field_debt(self)
+
+                BoxLayout:
+                    id: coffee_layout
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 100
+                    OutlineButton:
+                        text: 'COFFEE'
+                        size_hint: .9 , None
+                        height: 100
+                        on_release: root.manager.current = 'INPUT'
+                        on_release: root.change_INPUT_values('Coffee Expenses')
+                        on_release: root.load_values('Coffee Expenses')
+                    OutlineButton: 
+                        text: '-'
+                        size_hint: .1 , None
+                        height: 100
+                        on_release: root.remove_data_field_debt(self)
+
+        OutlineButton: 
+            text: 'Add Input Field'
+            size_hint: .4 , .05
+            pos_hint: {'x': .525 , 'y': .1}
+            on_release: root.debt_button()
+
+        MainButton: 
+            text: '-AVERAGES-'
+            size_hint: 1 , .06
+            pos_hint: {'x': 0 , 'y': 0}
+            on_release: root.manager.current = 'averages'
+
+
+
+<ThirdScreen>:
+    name: 'averages'
+
+    canvas.before:
+
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'bg2.png'
+
+    FloatLayout:
+
+        Image: 
+            source: 'mushronaught.png'
+            size_hint_x: .4
+            pos_hint: {'x': .05 , 'y': .36}
+
+        Button: 
+            text: '-INPUT SCREEN-'
+            size_hint: 1 , .06
+            pos_hint: {'x': 0 , 'y': 0}
+            on_release: root.manager.current = 'input'
+
